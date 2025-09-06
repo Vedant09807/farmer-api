@@ -30,7 +30,8 @@ import {
   HelpCircle,
   User,
 } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import dynamic from "next/dynamic"
+const SoilMoistureChart = dynamic(() => import("../components/charts/soil-moisture-chart"), { ssr: false })
 
 const soilMoistureData = [
   { date: "8/23", moisture: 45 },
@@ -331,29 +332,7 @@ export default function FarmingAssistant() {
               </CardHeader>
               <CardContent>
                 <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={soilMoistureData}>
-                      <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                      <XAxis dataKey="date" axisLine={false} tickLine={false} className="text-xs" />
-                      <YAxis axisLine={false} tickLine={false} className="text-xs" />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--card))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "8px",
-                          fontSize: "12px",
-                        }}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="moisture"
-                        stroke="hsl(var(--primary))"
-                        strokeWidth={2}
-                        dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
-                        activeDot={{ r: 6, fill: "hsl(var(--primary))" }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
+                  <SoilMoistureChart data={soilMoistureData} />
                 </div>
               </CardContent>
             </Card>
